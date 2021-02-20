@@ -1,4 +1,5 @@
 #include<iostream>
+#include<queue>
 using namespace std;
 void fastIO()
 {
@@ -178,6 +179,72 @@ void PrintAllLevels(Node* root)
 	}
 }
 
+void NormalBFS(Node* root)
+{
+	queue<Node*> q;
+	q.push(root);
+
+	while(!q.empty())
+	{
+		Node* f = q.front();
+		cout<<f -> data<<" ";
+		q.pop();
+
+		if(f -> left)
+		{
+			q.push(f -> left);
+		}
+		if(f -> right)
+		{
+			q.push(f -> right);
+		}
+	}
+	return;
+}
+
+
+void BFS(Node* root)
+{
+	queue<Node*> q;
+	q.push(root);
+	q.push(NULL);
+
+	while(!q.empty())
+	{
+		Node* f = q.front();
+
+		if(f == NULL)
+		{
+			cout<<"\n";
+			q.pop();
+
+			if(!q.empty())
+			{
+				// if after poping NULL the Queue is still Not empty
+				// then push one more NULL, so that we can know that 
+				// all the chilfren of the prev. node are pushed into the 
+				// queue.....
+				q.push(NULL);
+			}
+		}
+		else
+		{
+			cout<<f -> data<<" ";
+			q.pop();
+
+			if(f -> left)
+			{
+				q.push(f -> left);
+			}
+			if(f -> right)
+			{
+				q.push(f -> right);
+			}
+		}
+	}
+	return;
+}
+
 void solve()
 {
 	// 1. Building Part Of the Tree --(First Execute)
@@ -242,12 +309,12 @@ void solve()
 
 
 	// 4. BFS (Breadth First Search)
-	// Node* root = buildTree();
-	// NormalBFS(root);   // Level Order Traversal without newline
-	// cout<<"\n";
+	Node* root = buildTree();
+	//NormalBFS(root);   // Level Order Traversal without newline
+	//cout<<"\n";
 
-	// BFS(root);   // Level Order With Newline
-	// cout<<"\n";
+	BFS(root);   // Level Order With Newline
+	cout<<"\n";
 
 	return;
 }
