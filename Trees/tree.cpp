@@ -8,10 +8,10 @@ void fastIO()
 
 void fileIO()
 {
-	#ifndef ONLINE_JUDGE
-		freopen( "input.txt" , "r" , stdin);
-		freopen( "output.txt" , "w" , stdout);
-	#endif
+#ifndef ONLINE_JUDGE
+	freopen( "input.txt" , "r" , stdin);
+	freopen( "output.txt" , "w" , stdout);
+#endif
 }
 
 /* #############################################################################
@@ -21,18 +21,18 @@ void fileIO()
 
 	INTRODUCTION
 	------------
-	1) The maximum number of nodes at level ‘l’ of a binary tree is 2l. 
-	
-	2) The Maximum number of nodes in a binary tree of height ‘h’ is 2h – 1. 
-	
-	3) In a Binary Tree with N nodes, minimum possible height or 
+	1) The maximum number of nodes at level ‘l’ of a binary tree is 2l.
+
+	2) The Maximum number of nodes in a binary tree of height ‘h’ is 2h – 1.
+
+	3) In a Binary Tree with N nodes, minimum possible height or
 	   the minimum no. of levels is --> Log2(N+1).
-	
-	4) A Binary Tree with L leaves has at least ( | Log2L |+ 1 )levels. 
+
+	4) A Binary Tree with L leaves has at least ( | Log2L |+ 1 )levels.
 		L   <=  2l-1  [From Point 1]
-		l =   | Log2L | + 1 
+		l =   | Log2L | + 1
 		where l is the minimum number of levels.
-	
+
 	5) In Binary tree where every node has 0 or 2 children,
 	   the number of leaf nodes is always one more than nodes with two children.
 
@@ -42,7 +42,7 @@ void fileIO()
 
 	############################################################################
 
-*/ 
+*/
 
 
 
@@ -66,10 +66,10 @@ struct Node
 Node* buildTree()
 {
 	int value_at_node;
-	cin>> value_at_node;
+	cin >> value_at_node;
 
 	//Base Case
-	if(value_at_node == -1)
+	if (value_at_node == -1)
 	{
 		return NULL;;
 	}
@@ -85,12 +85,12 @@ Node* buildTree()
 void PreOrderTraversal(Node* root)
 {
 	// PreOrder Traversal -->  (Root --> Left --> Right)
-	if(root == NULL)
+	if (root == NULL)
 	{
 		return;
 	}
 
-	cout<<root -> data<<" ";
+	cout << root -> data << " ";
 	PreOrderTraversal(root -> left);
 	PreOrderTraversal(root -> right);
 }
@@ -98,33 +98,33 @@ void PreOrderTraversal(Node* root)
 void InOrderTraversal(Node* root)
 {
 	// PreOrder Traversal -->  (Left --> Root --> Right)
-	if(root == NULL)
+	if (root == NULL)
 	{
 		return;
 	}
 
 	InOrderTraversal(root -> left);
-	cout<<root -> data<<" ";
+	cout << root -> data << " ";
 	InOrderTraversal(root -> right);
 }
 
 void PostOrderTraversal(Node* root)
 {
 	// PreOrder Traversal -->  (Left --> Right --> Root)
-	if(root == NULL)
+	if (root == NULL)
 	{
 		return;
 	}
 
 	PostOrderTraversal(root -> left);
 	PostOrderTraversal(root -> right);
-	cout<<root -> data<<" ";
+	cout << root -> data << " ";
 }
 
 int Height(Node* root)
 {
 	// Base Case
-	if(root == NULL)
+	if (root == NULL)
 	{
 		return 0;
 	}
@@ -139,7 +139,7 @@ int Height(Node* root)
 void PrintkthLevelOfTree(Node *root, int k)
 {
 	// Base Case
-	if(root == NULL)
+	if (root == NULL)
 	{
 		return;
 	}
@@ -152,9 +152,9 @@ void PrintkthLevelOfTree(Node *root, int k)
 	// 	return;
 	// }
 
-	if(k == 1)
+	if (k == 1)
 	{
-		cout<<root -> data<<" ";
+		cout << root -> data << " ";
 		return;
 	}
 
@@ -166,16 +166,16 @@ void PrintkthLevelOfTree(Node *root, int k)
 void PrintAllLevels(Node* root)
 {
 	// Worst Case Complexity : O(n^2) -> if we are given a Skew Tree
-	if(root == NULL)
+	if (root == NULL)
 	{
 		return;
 	}
 
 	int H = Height(root);
-	for(int i = 1; i <= H; i++)
+	for (int i = 1; i <= H; i++)
 	{
-		PrintkthLevelOfTree(root,i);
-		cout<<"\n";
+		PrintkthLevelOfTree(root, i);
+		cout << "\n";
 	}
 }
 
@@ -184,17 +184,17 @@ void NormalBFS(Node* root)
 	queue<Node*> q;
 	q.push(root);
 
-	while(!q.empty())
+	while (!q.empty())
 	{
 		Node* f = q.front();
-		cout<<f -> data<<" ";
+		cout << f -> data << " ";
 		q.pop();
 
-		if(f -> left)
+		if (f -> left)
 		{
 			q.push(f -> left);
 		}
-		if(f -> right)
+		if (f -> right)
 		{
 			q.push(f -> right);
 		}
@@ -209,34 +209,34 @@ void BFS(Node* root)
 	q.push(root);
 	q.push(NULL);
 
-	while(!q.empty())
+	while (!q.empty())
 	{
 		Node* f = q.front();
 
-		if(f == NULL)
+		if (f == NULL)
 		{
-			cout<<"\n";
+			cout << "\n";
 			q.pop();
 
-			if(!q.empty())
+			if (!q.empty())
 			{
 				// if after poping NULL the Queue is still Not empty
-				// then push one more NULL, so that we can know that 
-				// all the chilfren of the prev. node are pushed into the 
+				// then push one more NULL, so that we can know that
+				// all the chilfren of the prev. node are pushed into the
 				// queue.....
 				q.push(NULL);
 			}
 		}
 		else
 		{
-			cout<<f -> data<<" ";
+			cout << f -> data << " ";
 			q.pop();
 
-			if(f -> left)
+			if (f -> left)
 			{
 				q.push(f -> left);
 			}
-			if(f -> right)
+			if (f -> right)
 			{
 				q.push(f -> right);
 			}
@@ -248,7 +248,7 @@ void BFS(Node* root)
 int CountNodes(Node* root)
 {
 	//Base Case
-	if(root == NULL)
+	if (root == NULL)
 	{
 		return 0;
 	}
@@ -263,7 +263,7 @@ int CountNodes(Node* root)
 int SumOfAllNodes(Node* root)
 {
 	// Base Case
-	if(root == NULL)
+	if (root == NULL)
 	{
 		return 0;
 	}
@@ -287,7 +287,7 @@ int Diameter(Node* root)
 	//                   -----------
 
 	//Base Case
-	if(root == NULL)
+	if (root == NULL)
 	{
 		return 0;
 	}
@@ -321,7 +321,7 @@ HeightDiameterPair FastDiameter(Node* root)
 	HeightDiameterPair p;
 
 	//Base Case
-	if(root == NULL)
+	if (root == NULL)
 	{
 		// As the height and the Diamater of an Empty tree is always 0.....
 		p.height = p.diameter = 0;
@@ -330,7 +330,7 @@ HeightDiameterPair FastDiameter(Node* root)
 
 	//Recirsive Case
 	HeightDiameterPair left_tree = FastDiameter(root -> left);
-	
+
 	HeightDiameterPair right_tree = FastDiameter(root -> right);
 
 	p.height = max( left_tree.height , right_tree.height) + 1;
@@ -340,6 +340,40 @@ HeightDiameterPair FastDiameter(Node* root)
 	return p;
 }
 
+
+int replaceSumOfNodeWithItsChildren( Node* root)
+{
+	// The idea/trick is that we need to store the data in the root
+	// ie. int temp = root -> data
+	// in a temp variable and after the computation of the sum we got
+	// on a particular nodes from its right and left children part
+	// root -> data = leftsum + rightsum;
+	// we will return the value (temp + root -> data)....
+
+	// Base Case
+	if (root == NULL)
+	{
+		// if empty tree return 0
+		return 0;
+	}
+
+	if (root -> left == NULL && root -> right == NULL)
+	{
+		// Means we are on the leaf node
+		// so, only return the root ->data
+		return root -> data;
+	}
+
+	// Recursive case
+	// Here we, follow bottom up approact(post order traversal)
+	int left_sum = replaceSumOfNodeWithItsChildren(root -> left);
+	int right_sum = replaceSumOfNodeWithItsChildren(root -> right);
+
+	int temp = root -> data;
+	root -> data = left_sum + right_sum;
+
+	return temp + root -> data;
+}
 
 void solve()
 {
@@ -365,10 +399,10 @@ void solve()
 	//      9   7  13
 
 	// Input :- 8 10 1 -1 -1 6 9 -1 -1 7 -1 -1 3 -1 14 13 -1 -1 -1
-	// Output: 
-	//			Pre Order : 8 10 1 6 9 7 3 14 13 
-	//			In Order : 1 10 9 6 7 8 3 13 14 
-	//			Post Order : 1 9 7 6 10 13 14 3 8 
+	// Output:
+	//			Pre Order : 8 10 1 6 9 7 3 14 13
+	//			In Order : 1 10 9 6 7 8 3 13 14
+	//			Post Order : 1 9 7 6 10 13 14 3 8
 
 	// Node* root = buildTree();
 
@@ -390,12 +424,12 @@ void solve()
 	//3. LEVEL ORDER TRAVERSALS (HEIGHT AND PRINTING A PARTICULAR LEVEL)
 	// ---------------------------------------------------------------------
 	//   (i) Finding Height of the tree   ---|  Both Will combine to give
-	//   (ii) printing each level  ----------|_ level order Traversal  
+	//   (ii) printing each level  ----------|_ level order Traversal
 	// Node* root = buildTree();
-	
-	// cout<<"Height of Tree : "<<Height(root)<<"\n";   
-	
-	// //PrintkthLevelOfTree(root, 7);  // PrintkthLevelOfTree(root, k - value) 
+
+	// cout<<"Height of Tree : "<<Height(root)<<"\n";
+
+	// //PrintkthLevelOfTree(root, 7);  // PrintkthLevelOfTree(root, k - value)
 	// //cout<<"\n";
 
 	// PrintAllLevels(root);
@@ -432,14 +466,38 @@ void solve()
 	// 6. Diameter of a Binary tree
 	//---------------------------------------------
 
+	// Node* root = buildTree();
+	// // cout<<"Diameter : "<<Diameter(root)<<"\n";
+
+	// HeightDiameterPair p = FastDiameter(root);
+	// cout << "Height :" << p.height << "\n";
+	// cout << "Diameter : " << p.diameter << "\n";
+
+
+
+
+
+	// 7. Sum Replacement Question
+	// -------------------------------------------------------
+	// Keeping the leaf nodes as it is and replace the other nodes by the sum
+	// of their children nodes.
+
+	//				8                                      63
+	//			   / \	                                  /  \
+	//			  10  3							         23   27
+	//			 /  \  \        ------------->          /  \   \
+	//			1    6  14                             1   16   13
+	//		    	/ \  \                                /  \   \
+	//		       9   7  13 	                         9    7   13
+
+
 	Node* root = buildTree();
-	// cout<<"Diameter : "<<Diameter(root)<<"\n";
-	
-	HeightDiameterPair p = FastDiameter(root);
-	cout<<"Height :"<<p.height<<"\n";
-	cout<<"Diameter : "<<p.diameter<<"\n";
+	cout << "Tree Before Replacement :" << "\n";
+	BFS(root);
 
-
+	replaceSumOfNodeWithItsChildren(root);
+	cout << "Tree After Replacement : " << "\n";
+	BFS(root);
 
 
 	return;
@@ -451,7 +509,7 @@ int main(int argc, char const *argv[])
 	fileIO();
 	int t = 1;
 	//cin>>t;
-	while(t--) solve();
+	while (t--) solve();
 	return 0;
 }
 
