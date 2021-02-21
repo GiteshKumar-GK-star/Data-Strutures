@@ -245,6 +245,102 @@ void BFS(Node* root)
 	return;
 }
 
+int CountNodes(Node* root)
+{
+	//Base Case
+	if(root == NULL)
+	{
+		return 0;
+	}
+
+	// Recursive Case
+	int left_subtree_nodes = CountNodes(root -> left);
+	int right_subtree_nodes = CountNodes(root -> right);
+
+	return 1 + left_subtree_nodes + right_subtree_nodes;
+}
+
+int SumOfAllNodes(Node* root)
+{
+	// Base Case
+	if(root == NULL)
+	{
+		return 0;
+	}
+
+	// Recursive Case
+	int sum_left_subtree = SumOfAllNodes(root -> left);
+	int sum_right_subtree = SumOfAllNodes(root -> right);
+
+	return root -> data + sum_left_subtree + sum_right_subtree;
+}
+
+int Diameter(Node* root)
+{
+
+	// Here, we used a Top- Down Approach (Pre-order Traverse)
+	// for finding the Diamater of the Binary Tree...
+	// Takes a time of Order = O(n^2)
+	// As, First for finding height --> O(n) time
+	// Then, Recursively calling for on the left and right subtrees. --> O(n) time
+	// So, Overall Takes O(n^2) time
+	//                   -----------
+
+	//Base Case
+	if(root == NULL)
+	{
+		return 0;
+	}
+
+	// Recursive Case
+	int height_left_subtree = Height(root -> left);
+	int height_right_subtree = Height(root -> right);
+
+	int option1 = height_left_subtree + height_right_subtree;
+	int option2 = Diameter(root -> left);
+	int option3 = Diameter(root -> right);
+
+	return max(option1, max(option2, option3));
+}
+
+
+
+// For this we can use Class as well as Structure ..
+class HeightDiameterPair
+{
+public:
+	int height;
+	int diameter;
+};
+
+HeightDiameterPair FastDiameter(Node* root)
+{
+	// Here, we will be following the "Bottom - Up approach" using the Post Order Traversal
+	// this will be much faster as compared to the above method
+
+	HeightDiameterPair p;
+
+	//Base Case
+	if(root == NULL)
+	{
+		// As the height and the Diamater of an Empty tree is always 0.....
+		p.height = p.diameter = 0;
+		return p;
+	}
+
+	//Recirsive Case
+	HeightDiameterPair left_tree = FastDiameter(root -> left);
+	
+	HeightDiameterPair right_tree = FastDiameter(root -> right);
+
+	p.height = max( left_tree.height , right_tree.height) + 1;
+
+	p.diameter = max(left_tree.height + right_tree.height , max(left_tree.diameter , right_tree.diameter));
+
+	return p;
+}
+
+
 void solve()
 {
 	// 1. Building Part Of the Tree --(First Execute)
@@ -309,12 +405,42 @@ void solve()
 
 
 	// 4. BFS (Breadth First Search)
-	Node* root = buildTree();
+	//--------------------------------------------
+
+	// Node* root = buildTree();
 	//NormalBFS(root);   // Level Order Traversal without newline
 	//cout<<"\n";
 
-	BFS(root);   // Level Order With Newline
-	cout<<"\n";
+	// BFS(root);   // Level Order With Newline
+	// cout<<"\n";
+
+
+
+
+	// 5. Count No. of Nodes of Tree And Sum of All nodes in Tree
+	// ------------------------------------------------------------
+
+	// Node* root = buildTree();
+	// cout<<"No. of Nodes : "<<CountNodes(root)<<"\n";
+	// cout<<"Sum of all Nodes : "<<SumOfAllNodes(root)<<"\n";
+
+
+
+
+
+
+	// 6. Diameter of a Binary tree
+	//---------------------------------------------
+
+	Node* root = buildTree();
+	// cout<<"Diameter : "<<Diameter(root)<<"\n";
+	
+	HeightDiameterPair p = FastDiameter(root);
+	cout<<"Height :"<<p.height<<"\n";
+	cout<<"Diameter : "<<p.diameter<<"\n";
+
+
+
 
 	return;
 }
