@@ -1,5 +1,6 @@
 #include<iostream>
 #include<queue>
+#include<cmath>
 using namespace std;
 void fastIO()
 {
@@ -375,6 +376,70 @@ int replaceSumOfNodeWithItsChildren( Node* root)
 	return temp + root -> data;
 }
 
+bool CheckHeightBalanced(Node* root)
+{
+
+	// this is a top down approach and takes O(n ^ 2) time
+
+
+	// Base Case
+	if (root == NULL)
+	{
+		return true;  // --> as empty tree is always height balanced
+	}
+
+	// recursive case
+	int left_subtree_height = Height(root -> left);
+	int right_subtree_height = Height(root -> right);
+
+	if ((abs(left_subtree_height - right_subtree_height) <= 1) && (CheckHeightBalanced(root -> left)) && (CheckHeightBalanced(root -> right)))
+	{
+		return true;
+	}
+	return false;
+}
+
+
+class HeightBalancedPair
+{
+public:
+	int height;
+	bool balanced;
+};
+
+HeightBalancedPair CheckHeightBalancedFaster(Node* root)
+{
+	// In this approach , we do bottom up traversal and this algorithm
+	// will take O(n) time......
+
+	HeightBalancedPair p;
+
+	// Base Case
+	if (root == NULL)
+	{
+		// As an empty tree is always balanced...
+		p.height = 0;
+		p.balanced = true;
+		return p;
+	}
+
+	// Recursive Case
+	HeightBalancedPair left_tree = CheckHeightBalancedFaster(root -> left);
+	HeightBalancedPair right_tree = CheckHeightBalancedFaster(root -> right);
+
+	p.height = max(left_tree.height, right_tree.height) + 1;
+
+	if ((abs(left_tree.height - right_tree.height) <= 1) && left_tree.balanced && right_tree.balanced)
+	{
+		p.balanced = true;
+	}
+	else
+	{
+		p.balanced = false;
+	}
+	return p;
+}
+
 void solve()
 {
 	// 1. Building Part Of the Tree --(First Execute)
@@ -491,13 +556,43 @@ void solve()
 	//		       9   7  13 	                         9    7   13
 
 
-	Node* root = buildTree();
-	cout << "Tree Before Replacement :" << "\n";
-	BFS(root);
+	// Node* root = buildTree();
+	// cout << "Tree Before Replacement :" << "\n";
+	// BFS(root);
 
-	replaceSumOfNodeWithItsChildren(root);
-	cout << "Tree After Replacement : " << "\n";
-	BFS(root);
+	// replaceSumOfNodeWithItsChildren(root);
+	// cout << "Tree After Replacement : " << "\n";
+	// BFS(root);
+
+
+
+
+
+	// 8. Height Balanced Tree
+	//----------------------------------------------------------
+	// A height balanced tree (Binary tree) is that tree which satisfy the
+	// condition that the difference between the heights of the left and the
+	// right subtree must be <= 1 at each and every node of the tree..
+	// Node* root = buildTree();
+	// if (CheckHeightBalanced(root))
+	// {
+	// 	cout << "Balanced" << "\n";
+	// }
+	// else
+	// {
+	// 	cout << "Not Balanced" << "\n";
+	// }
+
+	Node* root = buildTree();
+	HeightBalancedPair p = CheckHeightBalancedFaster(root);
+	if (p.balanced)
+	{
+		cout << "Balanced" << "\n";
+	}
+	else
+	{
+		cout << "Not Balanced" << "\n";
+	}
 
 
 	return;
